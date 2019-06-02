@@ -1,0 +1,31 @@
+﻿@model DangersViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Subcategory</th>
+            <th scope="col">City</th>
+            <th scope="col">District</th>
+            <th scope="col">Street</th>
+            <th scope="col">NotificationType</th>
+            <th scope="col">Source</th>
+            <th scope="col">CreateDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ReportedDangers)
+        {
+            <tr>
+                <td scope="row">@item.Category</td>
+                <td>@item.Subcategory</td>
+                <td>@item.City</td>
+                <td>@item.District</td>
+                <td>@item.Street</td>
+                <td>@item.NotificationType</td>
+                <td>@item.Source</td>
+                <td>@item.CreateDate</td>
+            </tr>
+        }
+    </tbody>
+</table>

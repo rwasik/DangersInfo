@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
+    <ProjectReference Include="..\DangersInfo.Configuration\DangersInfo.Configuration.csproj" />
+    <ProjectReference Include="..\DangersInfo.Services\DangersInfo.Services.csproj" />
+    <ProjectReference Include="..\WarsawOpenData.Proxy\WarsawOpenData.Proxy.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,3 +6,9 @@
 /DangersInfoApp/bin/Debug/netcoreapp2.2
 /DangersInfoApp/obj
 /DangersInfoApp/wwwroot/lib
+/WarsawOpenData.Proxy/bin/Debug/netcoreapp2.2
+/WarsawOpenData.Proxy/obj
+/DangersInfo.Services/bin/Debug/netcoreapp2.2
+/DangersInfo.Services/obj
+/DangersInfo.Configuration/bin/Debug/netcoreapp2.2
+/DangersInfo.Configuration/obj
