@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/DangersInfoApp/bin/Debug/netcoreapp2.2
+/DangersInfoApp/obj
+/DangersInfoApp/wwwroot/lib
