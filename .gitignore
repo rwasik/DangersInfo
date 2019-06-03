@@ -5,7 +5,6 @@
 /.vs
 /DangersInfoApp/bin/Debug/netcoreapp2.2
 /DangersInfoApp/obj
-/DangersInfoApp/wwwroot/lib
 /WarsawOpenData.Proxy/bin/Debug/netcoreapp2.2
 /WarsawOpenData.Proxy/obj
 /DangersInfo.Services/bin/Debug/netcoreapp2.2
@@ -18,3 +17,6 @@
 /DangersInfo.Tests/obj
 /DevelopmentResourceGroup/bin/Debug/staging/DevelopmentResourceGroup
 /DevelopmentResourceGroup/obj/Debug
+/DangersInfoApp/wwwroot/lib/jquery
+/DangersInfoApp/wwwroot/lib/handlebars.js
+/DangersInfoApp/wwwroot/lib/bootstrap

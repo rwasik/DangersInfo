@@ -1,4 +1,8 @@
-﻿<div id="spinner" class="text-center w-100">
+﻿@{
+    ViewData["Title"] = "Reported Dangers";
+}
+
+<div id="spinner" class="text-center w-100">
     <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
         <span class="sr-only"></span>
     </div>
@@ -8,10 +12,20 @@
 
 @section Scripts
 {
+    <environment include="Development">
+        <script src="~/lib/dangers/dangers.service.js"></script>
+        <script src="~/lib/helpers/handlebars.helpers.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/dangers/dangers.service.min.js"></script>
+        <script src="~/lib/helpers/handlebars.helpers.min.js"></script>
+    </environment>
+
     <script id="dangers-template" type="text/x-handlebars-template">
-        <table class="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Category</th>
                     <th scope="col">Subcategory</th>
                     <th scope="col">City</th>
@@ -24,41 +38,27 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each reportedDangers}}
+                {{#each reportedDangers as |danger index|}}
                     <tr>
-                        <td scope="row">{{category}}</td>
-                        <td>{{subcategory}}</td>
-                        <td>{{city}}</td>
-                        <td>{{district}}</td>
-                        <td>{{street}}</td>
-                        <td>{{notificationType}}</td>
-                        <td>{{notificationNumber}}</td>
-                        <td>{{source}}</td>
-                        <td>{{createDate}}</td>
+                        <td scope="row">{{inc index}}</td>
+                        <td>{{danger.category}}</td>
+                        <td>{{danger.subcategory}}</td>
+                        <td>{{danger.city}}</td>
+                        <td>{{danger.district}}</td>
+                        <td>{{danger.street}}</td>
+                        <td>{{danger.notificationType}}</td>
+                        <td>{{danger.notificationNumber}}</td>
+                        <td>{{danger.source}}</td>
+                        <td>{{danger.createDate}}</td>
                     </tr>
                 {{/each}}
             </tbody>
         </table>
     </script>
 
-    <script type="text/javascript">
+    <script type="text/javascript">        
         $(document).ready(function () {
-            $.ajax({
-                type: "GET",
-                url: "/dangers/get",
-                dataType: "json",
-                success: function (data) {
-                    var source = document.getElementById("dangers-template").innerHTML;
-                    var template = Handlebars.compile(source);
-                    var html = template(data);
-
-                    $("#dangers").append(html);
-                    $('#spinner').remove();
-                },
-                error: function () {
-                    window.location.href = "home/error";                    
-                }
-            });    
+            dangersService.getDangers();
         });
     </script>
 }
