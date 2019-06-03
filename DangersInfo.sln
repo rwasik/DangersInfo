@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DangersInfo.Services", "Dan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DangersInfo.Configuration", "DangersInfo.Configuration\DangersInfo.Configuration.csproj", "{C68C0684-2E05-4D84-B86F-76D1C1D8C55B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DangersInfo.Tests", "DangersInfo.Tests\DangersInfo.Tests.csproj", "{7F82AB12-02F3-4559-B279-E4B964947BC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DangersInfo.Tests", "DangersInfo.Tests\DangersInfo.Tests.csproj", "{7F82AB12-02F3-4559-B279-E4B964947BC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DangersInfo.IntegrationTests", "DangersInfo.IntegrationTests\DangersInfo.IntegrationTests.csproj", "{5B67565E-2CEC-4306-81FA-4AA9DC4E32DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DangersInfo.IntegrationTests", "DangersInfo.IntegrationTests\DangersInfo.IntegrationTests.csproj", "{5B67565E-2CEC-4306-81FA-4AA9DC4E32DD}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "DevelopmentResourceGroup", "DevelopmentResourceGroup\DevelopmentResourceGroup.deployproj", "{922DDD51-5BE5-4B8F-9236-31510E0DCF49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{5B67565E-2CEC-4306-81FA-4AA9DC4E32DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B67565E-2CEC-4306-81FA-4AA9DC4E32DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B67565E-2CEC-4306-81FA-4AA9DC4E32DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{922DDD51-5BE5-4B8F-9236-31510E0DCF49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{922DDD51-5BE5-4B8F-9236-31510E0DCF49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{922DDD51-5BE5-4B8F-9236-31510E0DCF49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{922DDD51-5BE5-4B8F-9236-31510E0DCF49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

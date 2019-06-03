@@ -16,3 +16,5 @@
 /DangersInfo.IntegrationTests/obj
 /DangersInfo.Tests/bin/Debug/netcoreapp2.2
 /DangersInfo.Tests/obj
+/DevelopmentResourceGroup/bin/Debug/staging/DevelopmentResourceGroup
+/DevelopmentResourceGroup/obj/Debug

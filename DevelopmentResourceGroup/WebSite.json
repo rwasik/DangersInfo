@@ -1,0 +1,211 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentType": {
+      "type": "string",
+      "minLength": 3,
+      "allowedValues": [
+        "dev",
+        "test",
+        "prod"
+      ]
+    },
+    "resourceName": {
+      "type": "string",
+      "minLength": 6
+    },
+    "serviceOwnerTag": {
+      "type": "string",
+      "minLength": 6
+    },
+    "warsawApiUrl": {
+      "type": "string",
+      "minLength": 6
+    },    
+    "webAppPlan": {
+      "type": "string",
+      "defaultValue": "Free",
+      "allowedValues": [
+        "Free",
+        "Shared",
+        "Basic_B1",
+        "Basic_B2",
+        "Basic_B3",
+        "Standard_S1",
+        "Standard_S2",
+        "Standard_S3",
+        "Premium_P1",
+        "Premium_P2",
+        "Premium_P3"
+      ],
+      "metadata": {
+        "description": "Describes plan's pricing tier and capacity. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+      }
+    },
+    "skuCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "minValue": 1,
+      "metadata": {
+        "description": "Describes plan's instance count"
+      }
+    }
+  },
+  "variables": {
+    "webSiteName": "[concat(parameters('resourceName'), '-', parameters('environmentType'))]",
+    "hostingPlans": {
+      "Free": {
+        "skuName": "F1"
+      },
+      "Shared": {
+        "skuName": "D1"
+      },
+      "Basic_B1": {
+        "skuName": "B1"
+      },
+      "Basic_B2": {
+        "skuName": "B2"
+      },
+      "Basic_B3": {
+        "skuName": "B3"
+      },
+      "Standard_S1": {
+        "skuName": "S1"
+      },
+      "Standard_S2": {
+        "skuName": "S2"
+      },
+      "Standard_S3": {
+        "skuName": "S3"
+      },
+      "Premium_P1": {
+        "skuName": "P1"
+      },
+      "Premium_P2": {
+        "skuName": "P2"
+      },
+      "Premium_P3": {
+        "skuName": "P3"
+      }
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-08-01",
+      "name": "[parameters('webAppPlan')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "HostingPlan"
+      },
+      "sku": {
+        "name": "[variables('hostingPlans')[parameters('webAppPlan')].skuName]",
+        "capacity": "[parameters('skuCapacity')]"
+      },
+      "properties": {
+        "name": "[parameters('webAppPlan')]"
+      }
+    },
+    {
+      "apiVersion": "2015-08-01",
+      "name": "[variables('webSiteName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('webAppPlan'))]": "Resource",
+        "displayName": "Website",
+        "serviceOwner": "[parameters('serviceOwnerTag')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms/', parameters('webAppPlan'))]"
+      ],
+      "properties": {
+        "name": "[variables('webSiteName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('webAppPlan'))]"
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('webSiteName'))]"
+          ],
+          "tags": {
+            "displayName": "WarsawOpenDataSettings"
+          },
+          "properties": {
+            "ApiUrl": "WarsawOpenDataSettings:[parameters('warsawApiUrl')]"
+          }
+        }
+      ]
+    },
+    {
+      "apiVersion": "2014-04-01",
+      "name": "[concat(parameters('webAppPlan'), '-', resourceGroup().name)]",
+      "type": "Microsoft.Insights/autoscalesettings",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('webAppPlan'))]": "Resource",
+        "displayName": "AutoScaleSettings"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms/', parameters('webAppPlan'))]"
+      ],
+      "properties": {
+        "profiles": [
+          {
+            "name": "Default",
+            "capacity": {
+              "minimum": 1,
+              "maximum": 2,
+              "default": 1
+            },
+            "rules": [
+              {
+                "metricTrigger": {
+                  "metricName": "CpuPercentage",
+                  "metricResourceUri": "[concat(resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('webAppPlan'))]",
+                  "timeGrain": "PT1M",
+                  "statistic": "Average",
+                  "timeWindow": "PT10M",
+                  "timeAggregation": "Average",
+                  "operator": "GreaterThan",
+                  "threshold": 80.0
+                },
+                "scaleAction": {
+                  "direction": "Increase",
+                  "type": "ChangeCount",
+                  "value": 1,
+                  "cooldown": "PT10M"
+                }
+              },
+              {
+                "metricTrigger": {
+                  "metricName": "CpuPercentage",
+                  "metricResourceUri": "[concat(resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('webAppPlan'))]",
+                  "timeGrain": "PT1M",
+                  "statistic": "Average",
+                  "timeWindow": "PT1H",
+                  "timeAggregation": "Average",
+                  "operator": "LessThan",
+                  "threshold": 60.0
+                },
+                "scaleAction": {
+                  "direction": "Decrease",
+                  "type": "ChangeCount",
+                  "value": 1,
+                  "cooldown": "PT1H"
+                }
+              }
+            ]
+          }
+        ],
+        "enabled": false,
+        "name": "[concat(parameters('webAppPlan'), '-', resourceGroup().name)]",
+        "targetResourceUri": "[concat(resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('webAppPlan'))]"
+      }
+    }
+  ]
+}
