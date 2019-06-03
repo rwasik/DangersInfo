@@ -18,6 +18,7 @@ namespace DangersInfoApp.Mapping
                     City = reportedDanger.City,
                     District = reportedDanger.District,
                     NotificationType = reportedDanger.NotificationType,
+                    NotificationNumber = reportedDanger.NotificationNumber,
                     Source = reportedDanger.Source,
                     Street = reportedDanger.Street,
                     Subcategory = reportedDanger.Subcategory,

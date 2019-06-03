@@ -19,6 +19,7 @@ namespace DangersInfo.Services.Mapping
                     City = notification.City,
                     District = notification.District,
                     NotificationType = notification.NotificationType,
+                    NotificationNumber = notification.NotificationNumber,
                     Source = notification.Source,
                     Street = notification.Street,
                     Subcategory = notification.Subcategory,

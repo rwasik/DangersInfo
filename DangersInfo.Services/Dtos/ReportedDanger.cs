@@ -10,6 +10,7 @@ namespace DangersInfo.Services.Dtos
         public string District { get; set; }
         public string Street { get; set; }
         public string NotificationType { get; set; }
+        public string NotificationNumber { get; set; }
         public string Source { get; set; }
         public DateTime CreateDate { get; set; }
     }

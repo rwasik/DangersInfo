@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DangersInfo.Configuration.Configs;
 using Microsoft.Extensions.Options;
@@ -21,8 +22,13 @@ namespace WarsawOpenData.Proxy.Services
         public async Task<IEnumerable<Notification>> GetReportedNotificationsAsync()
         {
             var response = await _remoteClient.GetAsync<NotificationsResponse>($"{_settings.ApiUrl}/19115store_getNotifications?id={_settings.ApiId}&apikey={_settings.ApiKey}");
-            
+
+            if (!response.Result.Success)
+            {
+                throw new Exception($"[WarsawOpenDataService] 19115store_getNotifications failed. Response code: {response.Result.ResponseCode}. Description: {response.Result.ResponseDesc}");
+            }
+
             return response.Result.Data.Notifications;
-        }
+        }        
     }
 }
