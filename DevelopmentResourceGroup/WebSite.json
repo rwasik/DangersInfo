@@ -136,7 +136,7 @@
             "displayName": "WarsawOpenDataSettings"
           },
           "properties": {
-            "ApiUrl": "WarsawOpenDataSettings:[parameters('warsawApiUrl')]"
+            "WarsawOpenDataSettings:ApiUrl": "[parameters('warsawApiUrl')]"
           }
         }
       ]
