@@ -16,13 +16,19 @@ namespace DangersInfoApp.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
             var dangers = await _dangersInfoService.GetDangersAsync();
 
             var viewModel = _mapper.Map(dangers);
 
-            return View(viewModel);
+            return new JsonResult(viewModel);
         }
     }
 }

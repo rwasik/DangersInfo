@@ -1,33 +1,64 @@
-﻿@model DangersViewModel
+﻿<div id="spinner" class="text-center w-100">
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only"></span>
+    </div>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Category</th>
-            <th scope="col">Subcategory</th>
-            <th scope="col">City</th>
-            <th scope="col">District</th>
-            <th scope="col">Street</th>
-            <th scope="col">Notification Type</th>
-            <th scope="col">Notification Number</th>
-            <th scope="col">Source</th>
-            <th scope="col">Create Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.ReportedDangers)
-        {
-            <tr>
-                <td scope="row">@item.Category</td>
-                <td>@item.Subcategory</td>
-                <td>@item.City</td>
-                <td>@item.District</td>
-                <td>@item.Street</td>
-                <td>@item.NotificationType</td>
-                <td>@item.NotificationNumber</td>
-                <td>@item.Source</td>
-                <td>@item.CreateDate</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div id="dangers"></div>
+
+@section Scripts
+{
+    <script id="dangers-template" type="text/x-handlebars-template">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Subcategory</th>
+                    <th scope="col">City</th>
+                    <th scope="col">District</th>
+                    <th scope="col">Street</th>
+                    <th scope="col">Notification Type</th>
+                    <th scope="col">Notification Number</th>
+                    <th scope="col">Source</th>
+                    <th scope="col">Create Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each reportedDangers}}
+                    <tr>
+                        <td scope="row">{{category}}</td>
+                        <td>{{subcategory}}</td>
+                        <td>{{city}}</td>
+                        <td>{{district}}</td>
+                        <td>{{street}}</td>
+                        <td>{{notificationType}}</td>
+                        <td>{{notificationNumber}}</td>
+                        <td>{{source}}</td>
+                        <td>{{createDate}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/dangers/get",
+                dataType: "json",
+                success: function (data) {
+                    var source = document.getElementById("dangers-template").innerHTML;
+                    var template = Handlebars.compile(source);
+                    var html = template(data);
+
+                    $("#dangers").append(html);
+                    $('#spinner').remove();
+                },
+                error: function () {
+                    window.location.href = "home/error";                    
+                }
+            });    
+        });
+    </script>
+}
