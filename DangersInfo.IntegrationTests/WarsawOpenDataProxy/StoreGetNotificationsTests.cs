@@ -26,7 +26,7 @@ namespace DangersInfo.IntegrationTests.WarsawOpenDataProxy
             _options = Options.Create(settings);            
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("Integration")]
         public async Task GetSerialObjectsByContainerIdAsync_ReturnsContainerWithSerialObjects()
         {
             // arrange
