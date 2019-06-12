@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using DangersInfo.Services.Services;
 using DangersInfoApp.Mapping;
+using DangersInfoApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DangersInfoApp.Controllers
@@ -8,9 +10,9 @@ namespace DangersInfoApp.Controllers
     public class DangersController : Controller
     {
         private readonly IDangersInfoService _dangersInfoService;
-        private readonly IReportedDangersToViewModelMapper _mapper;
+        private readonly IMapper _mapper;
 
-        public DangersController(IDangersInfoService dangersInfoService, IReportedDangersToViewModelMapper mapper)
+        public DangersController(IDangersInfoService dangersInfoService, IMapper mapper)
         {
             _dangersInfoService = dangersInfoService;
             _mapper = mapper;
@@ -26,7 +28,7 @@ namespace DangersInfoApp.Controllers
         {
             var dangers = await _dangersInfoService.GetDangersAsync();
 
-            var viewModel = _mapper.Map(dangers);
+            var viewModel = _mapper.Map<DangersViewModel>(dangers);
 
             return new JsonResult(viewModel);
         }

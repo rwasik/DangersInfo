@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WarsawOpenData.Proxy.ModuleConfiguration;
+using AutoMapper;
 
 namespace DangersInfoApp
 {
@@ -26,12 +27,13 @@ namespace DangersInfoApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IReportedDangersToViewModelMapper, ReportedDangersToViewModelMapper>();
             services.Configure<WarsawOpenDataSettings>(_config.GetSection("WarsawOpenDataSettings"));
 
             services.ConfigureDangersInfoServices();
 
             services.ConfigureWarsawOpenDataProxyServices();
+
+            services.AddAutoMapper();
 
             services.AddMvc();
         }
