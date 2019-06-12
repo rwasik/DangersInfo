@@ -17,6 +17,4 @@
 /DangersInfo.Tests/obj
 /DevelopmentResourceGroup/bin/Debug/staging/DevelopmentResourceGroup
 /DevelopmentResourceGroup/obj/Debug
-/DangersInfoApp/wwwroot/lib/jquery
-/DangersInfoApp/wwwroot/lib/handlebars.js
-/DangersInfoApp/wwwroot/lib/bootstrap
+/DangersInfoApp/wwwroot/lib
